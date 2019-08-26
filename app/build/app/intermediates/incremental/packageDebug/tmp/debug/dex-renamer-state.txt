@@ -1,0 +1,4 @@
+#Mon Aug 26 19:22:16 EDT 2019
+base.0=/home/user/Desktop/Github/prioritize-and-brief/app/build/app/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex
