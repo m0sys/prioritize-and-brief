@@ -79,7 +79,7 @@ class _AddFormState extends State<AddForm> {
               ),
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Please enter some text';
+                  return 'Please enter some text here!';
                 }
                 return null;
               },

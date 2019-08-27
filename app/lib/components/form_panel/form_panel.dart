@@ -15,6 +15,7 @@ class FormPanel extends StatefulWidget {
 }
 
 class _FormPanelState extends State<FormPanel> {
+  final _formKey = GlobalKey<FormState>();
   // Private memeber variables
   String _mInputText;
 
@@ -35,6 +36,21 @@ class _FormPanelState extends State<FormPanel> {
   }
 
   @override
+  void dispose() {
+    _mTextController.dispose();
+    super.dispose();
+  }
+
+  void handleValidInput() {
+    widget.handleFab(this._mInputText);
+    this.setState(() {
+      _mInputText = "";
+    });
+    _mTextController.clear();
+    Navigator.pop(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Get theme instance
     ThemeData localTheme = Theme.of(context);
@@ -49,17 +65,26 @@ class _FormPanelState extends State<FormPanel> {
               this.widget.panelLogo,
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: AccentColorOverride(
-                      color: localTheme.accentColor,
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: this.widget.panelTitle,
-                            fillColor: Colors.black),
-                        controller: _mTextController,
+                child: Form(
+                  key: _formKey,
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: AccentColorOverride(
+                        color: localTheme.accentColor,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: this.widget.panelTitle,
+                              fillColor: Colors.black),
+                          controller: _mTextController,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Plese enter some text here!';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -68,18 +93,24 @@ class _FormPanelState extends State<FormPanel> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          backgroundColor: localTheme.accentColor,
-          foregroundColor: Colors.white,
-          onPressed: () {
-            widget.handleFab(this._mInputText);
-            this.setState(() {
-              _mInputText = "";
-            });
-            _mTextController.clear();
-            Navigator.pop(context);
-          },
-        )));
+        floatingActionButton: Builder(
+            builder: (context) => FloatingActionButton(
+                  child: Icon(Icons.add),
+                  backgroundColor: localTheme.accentColor,
+                  foregroundColor: Colors.white,
+                  onPressed: () {
+                    // Validate will return true if the form is valid, or false if
+                    // the form is invalid.
+                    if (_formKey.currentState.validate()) {
+                      // Process data.
+                      this.handleValidInput();
+                    } else {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            "Please type in a ${widget.panelTitle.toLowerCase()}ing message ..."),
+                      ));
+                    }
+                  },
+                ))));
   }
 }
