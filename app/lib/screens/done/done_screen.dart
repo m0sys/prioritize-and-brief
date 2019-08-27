@@ -4,13 +4,13 @@ import 'package:todo_list/data/items_injector.dart';
 import 'package:todo_list/models/todo_item.dart';
 import 'package:todo_list/screens/debrief_screen/debrief_screen.dart';
 
+/// This screen is where the user can view unarchived [TodoItem]s that have been completed.
 class DoneScreen extends StatefulWidget {
   @override
   _DoneScreenState createState() => _DoneScreenState();
 }
 
 class _DoneScreenState extends State<DoneScreen> {
-  // ! TODO: fix bug when changing priority.
   void onTrailTap(int index) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => DebriefScreen(index: index)));

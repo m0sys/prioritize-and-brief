@@ -1,5 +1,6 @@
 enum Priorites { A, B, C, D, E }
 
+/// Model for todo items.
 class TodoItem {
   final String id;
   final String title;

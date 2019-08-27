@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/components/accent_color_override/accent_color_override.dart';
 
+/// A Panel containing a [Form] and a [panelLogo].
+///
+/// This widget is used in [DebriefScreen] and [BriefScreen]
+/// to add debriefs and briefs to the [TodoItem] respectively.
 class FormPanel extends StatefulWidget {
   FormPanel(
       {@required this.panelTitle,

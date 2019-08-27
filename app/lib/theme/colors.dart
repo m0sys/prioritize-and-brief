@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// This class contains values for color themes.
+///
+/// These values are not the ones being used to theme the app.
+/// See [main] to view and modify theme.
 class ThemeColors {
   // static const Color primaryColor = Color(0xFF095c1a);
 

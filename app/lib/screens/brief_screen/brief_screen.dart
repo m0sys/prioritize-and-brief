@@ -4,6 +4,7 @@ import 'package:todo_list/data/items_injector.dart';
 import 'package:todo_list/models/todo_item.dart';
 import 'package:todo_list/screens/brief_screen/components/brief_logo.dart';
 
+/// This screen is where the user can add a [TodoItem.brief] to the given [TodoItem] at the given [index].
 class BriefScreen extends StatefulWidget {
   // Props
   BriefScreen({@required this.index});

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_list/components/dismissable_list_tile/custom_tile.dart';
 import 'package:todo_list/models/todo_item.dart';
 
+/// A Expandable List Tile that enables the user to swipe left to remove [TodoItem].
 class DismissibleListTile extends StatefulWidget {
   DismissibleListTile({
     @required this.index,

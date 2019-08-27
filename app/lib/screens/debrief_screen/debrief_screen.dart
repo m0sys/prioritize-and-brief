@@ -4,6 +4,7 @@ import 'package:todo_list/data/items_injector.dart';
 import 'package:todo_list/models/todo_item.dart';
 import 'package:todo_list/screens/debrief_screen/components/debrief_logo.dart';
 
+/// This screen is where the user can add a [TodoItem.debrief] to the given [TodoItem] at the given [index].
 class DebriefScreen extends StatefulWidget {
   // Props
   DebriefScreen({@required this.index});

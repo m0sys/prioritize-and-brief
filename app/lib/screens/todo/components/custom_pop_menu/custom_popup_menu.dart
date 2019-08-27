@@ -23,7 +23,6 @@ class _CustomPopupMenuState extends State<CustomPopupMenu> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData localTheme = Theme.of(context);
     return PopupMenuButton<TodoTileMenuOptions>(
       onSelected: (TodoTileMenuOptions result) {
         this.setState(() {
@@ -41,7 +40,10 @@ class _CustomPopupMenuState extends State<CustomPopupMenu> {
       itemBuilder: (BuildContext context) =>
           <PopupMenuEntry<TodoTileMenuOptions>>[
         const PopupMenuItem<TodoTileMenuOptions>(
-            child: Text("Brief", ), value: TodoTileMenuOptions.Brief),
+            child: Text(
+              "Brief",
+            ),
+            value: TodoTileMenuOptions.Brief),
         const PopupMenuItem<TodoTileMenuOptions>(
             child: Text("Archive"), value: TodoTileMenuOptions.Archive),
       ],

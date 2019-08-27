@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/models/todo_item.dart';
 
+/// A [Row] of [Radio] buttons that enable the user to choice priorities for [TodoItem].
 class ABCPriority extends StatefulWidget {
   ABCPriority({this.onChange, this.priority});
 

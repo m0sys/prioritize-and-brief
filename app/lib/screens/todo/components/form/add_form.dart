@@ -4,6 +4,7 @@ import 'package:todo_list/data/items_injector.dart';
 import 'package:todo_list/models/todo_item.dart';
 import 'package:uuid/uuid.dart';
 
+/// This form enables the user to add new [TodoItem]s to the app state and database.
 class AddForm extends StatefulWidget {
   @override
   _AddFormState createState() => _AddFormState();

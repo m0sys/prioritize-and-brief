@@ -11,6 +11,7 @@ import '../../data/items_injector.dart';
 // Import components
 import "../../models/todo_item.dart";
 
+/// This screen is where the user can view and add unarchived [TodoItem]s.
 class TodoScreen extends StatefulWidget {
   @override
   _TodoScreenState createState() => _TodoScreenState();

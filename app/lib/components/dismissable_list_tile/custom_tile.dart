@@ -4,6 +4,7 @@ import 'package:todo_list/data/items_injector.dart';
 import 'package:todo_list/models/todo_item.dart';
 import 'package:todo_list/utils/date_formater.dart';
 
+/// A custom card that shows [TodoItem] information with respect to given props.
 class CustomTile extends StatelessWidget {
   CustomTile(
       {this.index,

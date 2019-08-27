@@ -5,6 +5,7 @@ import './data/items_injector.dart';
 
 void main() => runApp(MyApp());
 
+/// This is the app entry point.
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 

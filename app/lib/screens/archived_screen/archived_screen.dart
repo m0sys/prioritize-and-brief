@@ -3,6 +3,7 @@ import 'package:todo_list/components/dismissable_list_tile/dismissable_list_tile
 import 'package:todo_list/data/items_injector.dart';
 import 'package:todo_list/models/todo_item.dart';
 
+/// This screen is where the user can view archived [TodoItem]s.
 class ArchivedScreen extends StatefulWidget {
   @override
   _ArchivedScreenState createState() => _ArchivedScreenState();
@@ -10,7 +11,7 @@ class ArchivedScreen extends StatefulWidget {
 
 class _ArchivedScreenState extends State<ArchivedScreen> {
   /// Dismiss [TodoItem] at [index] when user has confirmed dismissal.
-  /// 
+  ///
   /// Swipe left to delete [TodoItem] at [index] from [SQLiteDatabase].
   void onDismiss(int index) {
     TodoItemsService.of(context).removeArchivedItemAt(index);
@@ -59,12 +60,11 @@ class _ArchivedScreenState extends State<ArchivedScreen> {
         shrinkWrap: true,
         itemCount: archives.length,
         itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              key: ValueKey(archives[index].id),
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
-              child: _buildTile(index, archives[index]),
-            );
+          return Padding(
+            key: ValueKey(archives[index].id),
+            padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
+            child: _buildTile(index, archives[index]),
+          );
         },
       );
     }

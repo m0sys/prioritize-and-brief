@@ -33,7 +33,7 @@ class TodoItemsService extends StatefulWidget {
 class _TodoItemsServiceState extends State<TodoItemsService> {
   // Memeber variables.
 
-  // TODO: Remove when done with development.
+  /// Flag to turn db on and off.
   bool _dbOFF = false;
 
   /// [TodoItem]s that have not yet been archived.
@@ -52,7 +52,6 @@ class _TodoItemsServiceState extends State<TodoItemsService> {
   void initState() {
     super.initState();
 
-    // if (!this._dbOFF) _updateDB();
     if (!this._dbOFF) _loadItemsFromDB();
   }
 
@@ -83,27 +82,6 @@ class _TodoItemsServiceState extends State<TodoItemsService> {
 
     for (TodoItem item in archivedItems) {
       print("item injector: archive item title = ${item.title}");
-    }
-  }
-
-  /// Update items in [SQLiteDatabase] with new updated [TodoItem].
-  // TODO: Remove after development.
-  Future<void> _updateDB() async {
-    print("Updating db ...");
-    SQLiteDatabase sDB = SQLiteDatabase.db;
-    List<TodoItem> items = await sDB.items();
-    List<TodoItem> updates = [];
-    for (TodoItem item in items) {
-      TodoItem updated = TodoItem(
-          id: item.id,
-          title: item.title,
-          brief: item.brief,
-          debrief: item.debrief,
-          dateAdded: item.dateAdded,
-          dateCompleted: item.dateCompleted,
-          priority: Priorites.A,
-          isArchived: 0);
-      sDB.updateItem(updated);
     }
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/screens/archived_screen/archived_screen.dart';
-import 'package:todo_list/screens/settings_screen/settings_screen.dart';
 
 // Import all screens in this file.
 import './screens/todo/todo_screen.dart';
@@ -8,6 +7,7 @@ import './screens/done/done_screen.dart';
 
 enum AppBarMenuOptions { Archived, Settings }
 
+/// This widget handles all the routing needed for the [TabBar].
 class Routes extends StatefulWidget {
   @override
   _RoutesState createState() => _RoutesState();
@@ -64,10 +64,6 @@ class _RoutesState extends State<Routes> with SingleTickerProviderStateMixin {
                             builder: (context) => ArchivedScreen()));
                     break;
                   default:
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SettingsScreen()));
                 }
               },
               icon: Icon(Icons.more_vert),
@@ -79,12 +75,6 @@ class _RoutesState extends State<Routes> with SingleTickerProviderStateMixin {
                       "Archive",
                     ),
                     value: AppBarMenuOptions.Archived,
-                  ),
-                  const PopupMenuItem<AppBarMenuOptions>(
-                    child: Text(
-                      "Settings",
-                    ),
-                    value: AppBarMenuOptions.Settings,
                   ),
                 ];
               })
