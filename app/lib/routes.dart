@@ -38,7 +38,9 @@ class _RoutesState extends State<Routes> with SingleTickerProviderStateMixin {
     return (Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text('TODO'),
+        title: Text(
+          'TODO',
+        ),
         bottom: TabBar(
           tabs: <Tab>[
             Tab(
@@ -50,38 +52,42 @@ class _RoutesState extends State<Routes> with SingleTickerProviderStateMixin {
         ),
         actions: <Widget>[
           PopupMenuButton<AppBarMenuOptions>(
-            onSelected: (AppBarMenuOptions result) {
-              this.setState(() {
-                _mSelectedOption = result;
-              });
-              switch (this._mSelectedOption) {
-                case AppBarMenuOptions.Archived:
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ArchivedScreen()));
-                  break;
-                default:
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SettingsScreen()));
-              }
-            },
-            icon: Icon(Icons.more_vert),
-            tooltip: 'Archive item',
-            itemBuilder: (BuildContext context) =>
-                <PopupMenuEntry<AppBarMenuOptions>>[
-              const PopupMenuItem<AppBarMenuOptions>(
-                child: Text("Archive"),
-                value: AppBarMenuOptions.Archived,
-              ),
-              const PopupMenuItem<AppBarMenuOptions>(
-                child: Text("Settings"),
-                value: AppBarMenuOptions.Settings,
-              ),
-            ],
-          )
+              onSelected: (AppBarMenuOptions result) {
+                this.setState(() {
+                  _mSelectedOption = result;
+                });
+                switch (this._mSelectedOption) {
+                  case AppBarMenuOptions.Archived:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ArchivedScreen()));
+                    break;
+                  default:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SettingsScreen()));
+                }
+              },
+              icon: Icon(Icons.more_vert),
+              tooltip: 'Archive item',
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuEntry<AppBarMenuOptions>>[
+                  const PopupMenuItem<AppBarMenuOptions>(
+                    child: Text(
+                      "Archive",
+                    ),
+                    value: AppBarMenuOptions.Archived,
+                  ),
+                  const PopupMenuItem<AppBarMenuOptions>(
+                    child: Text(
+                      "Settings",
+                    ),
+                    value: AppBarMenuOptions.Settings,
+                  ),
+                ];
+              })
         ],
       ),
       body: TabBarView(

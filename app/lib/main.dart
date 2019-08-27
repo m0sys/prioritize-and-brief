@@ -46,7 +46,6 @@ ThemeData _buildMainThemeLight() {
     ),
     scaffoldBackgroundColor: surfaceColor,
     cardColor: primaryColor,
-    
     cardTheme: CardTheme(color: primaryColorDark, elevation: 8.0),
     dialogTheme: base.dialogTheme.copyWith(
       backgroundColor: surfaceColor,
@@ -107,7 +106,16 @@ TextTheme _buildMainTextTheme(TextTheme base, ThemeType type) {
               textBaseline: englishLike2018.body2.textBaseline,
               color: type != ThemeType.Accent && type != ThemeType.Primary
                   ? onSurfaceColor
-                  : type != ThemeType.Accent ? onPrimaryColor : onAccentColor))
+                  : type != ThemeType.Accent ? onPrimaryColor : onAccentColor),
+          subhead: base.subhead.copyWith(
+            fontSize: englishLike2018.subhead.fontSize,
+            fontWeight: englishLike2018.subhead.fontWeight,
+            letterSpacing: englishLike2018.subhead.letterSpacing,
+            textBaseline: englishLike2018.subhead.textBaseline,
+            color: type != ThemeType.Accent && type != ThemeType.Primary
+                ? onSurfaceColor
+                : type != ThemeType.Accent ? onPrimaryColor : onAccentColor,
+          ))
       .apply(
         fontFamily: 'Spectral',
       );

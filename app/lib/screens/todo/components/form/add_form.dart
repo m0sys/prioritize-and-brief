@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/components/AccentColorOverride/accent_color_override.dart';
+import 'package:todo_list/components/accent_color_override/accent_color_override.dart';
 import 'package:todo_list/data/items_injector.dart';
 import 'package:todo_list/models/todo_item.dart';
 import 'package:uuid/uuid.dart';
