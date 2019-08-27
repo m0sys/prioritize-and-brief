@@ -132,7 +132,7 @@ class _TodoItemsServiceState extends State<TodoItemsService> {
     TodoItem updated = this.updateIsArchived(item, 1);
 
     // Insert [item] with priority in [_mArchives].
-    this.insertArchivedItemWithPriority(updated);
+    this.insertItemWithPriority(updated, ItemState.Archived);
   }
 
   /// Move [item] to [_mTodos] and change [item.archives] to 0.
@@ -150,7 +150,7 @@ class _TodoItemsServiceState extends State<TodoItemsService> {
     TodoItem updated = this.updateIsArchived(item, 0);
 
     // Insert [item] with priority in [_mTodos].
-    this.insertUnarchivedItemWithPriority(updated);
+    this.insertItemWithPriority(updated, ItemState.Unarchived);
   }
 
   /// Filter out all [TodoItem]s that have been completed, and return
@@ -225,7 +225,7 @@ class _TodoItemsServiceState extends State<TodoItemsService> {
         priority: newPriority,
         isArchived: item.isArchived);
 
-    int indexFound = _binarySearchUnarchivedItemWithPriority(updated);
+    int indexFound = _binarySearchItemWithPriority(updated, _mTodos);
     print("updatePriority: indexFound = $indexFound");
     if (indexFound < 0) indexFound = ~indexFound;
     print("updatePriority: indexFound = $indexFound after tilde check");
@@ -241,65 +241,43 @@ class _TodoItemsServiceState extends State<TodoItemsService> {
     if (!this._dbOFF) SQLiteDatabase.db.updateItem(updated);
   }
 
-  // void insertItemWithPriority(TodoItem item, ItemState state) {
-  //   if (state == ItemState.Archived) {
-  //     int indexFound = _binarySearchItemWithPriority(item, _mArchives);
-  //     // Update state: insert new item at[indexFound] in [_mArchives].
-  //     this._insertArchivedItem(indexFound, item);
-  //   } else {
-  //     int indexFound = _binarySearchWithPriority(item, _mTodos);
-  //     // Update state: insert new item at [indexFound] in [_mTodos].
-  //     this._insertUnarchivedItem(indexFound, item);
-  //   }
-
-  //   // Update database: update item in db with id [updated.id].
-  //   if (!this._dbOFF) SQLiteDatabase.db.insertItem(item);
-  // }
-
-  /// Insert [item] in [_mTodos] with respect to [TodoItem.priority] field.
-  void insertUnarchivedItemWithPriority(TodoItem item) {
-    int indexFound = _binarySearchUnarchivedItemWithPriority(item);
-
-    // Update state: insert new item at [indexFound] in [_mTodos].
-    if (indexFound < 0) indexFound = ~indexFound;
-    this._insertUnarchivedItem(indexFound, item);
+  /// Insert [item] in either [_mArchives] or [_mTodos] given [state] value with respect to [TodoItem.priority] field.
+  ///
+  /// [state] takes in only two values: [ItemState.Archived] or [ItemState.Unarchived].
+  void insertItemWithPriority(TodoItem item, ItemState state) {
+    if (state == ItemState.Archived) {
+      int indexFound = _binarySearchItemWithPriority(item, _mArchives);
+      // Update state: insert new item at[indexFound] in [_mArchives].
+      if (indexFound < 0) indexFound = ~indexFound;
+      this._insertArchivedItem(indexFound, item);
+    } else {
+      int indexFound = _binarySearchItemWithPriority(item, _mTodos);
+      // Update state: insert new item at [indexFound] in [_mTodos].
+      if (indexFound < 0) indexFound = ~indexFound;
+      this._insertUnarchivedItem(indexFound, item);
+    }
 
     // Update database: update item in db with id [updated.id].
     if (!this._dbOFF) SQLiteDatabase.db.insertItem(item);
   }
 
-  /// Insert [item] in [_mArchives] with respect to [TodoItem.priority] field.
-  void insertArchivedItemWithPriority(TodoItem item) {
-    int indexFound = _binarySearchArchivedItemWithPriority(item);
-
-    // Update state: insert new item at [indexFound] in [_mArchives].
-    if (indexFound < 0) indexFound = ~indexFound;
-    this._insertArchivedItem(indexFound, item);
-
-    // Update database: update item in db with id [updated.id].
-    if (!this._dbOFF) SQLiteDatabase.db.insertItem(item);
-  }
-
-  /// Find correct position that [item] should be inserted into [_mTodos] with
+  /// Find correct position that [item] should be inserted into [list] with
   /// respect to the [Priorities] field.
-  int _binarySearchUnarchivedItemWithPriority(TodoItem item) {
-    return _binarySearchUnarchivedItemWithPriorityHelper(
-        0, _mTodos.length - 1, item);
+  ///
+  /// Uses a modified version of the binarySearchAlgorithm to find index more
+  /// efficiently.
+  int _binarySearchItemWithPriority(TodoItem item, List<TodoItem> list) {
+    return _binarySearchItemWithPriorityHelper(item, list, 0, list.length - 1);
   }
 
-  /// Helper function: look at [_binarySearchUnarchivedItemWithPriorities()] for details.
+  /// Helper function: look at [_binarySearchItemWithPriorities()] for details.
   ///
   /// Recursive helper function that is given a [left] parameter
   /// and [right] parameter so it can recursively find the correct position of
-  /// [item] with respect to the [Priorities] field in the already sorted [_mTodos]
+  /// [item] with respect to the [Priorities] field in the already sorted [list]
   /// list.
-  int _binarySearchUnarchivedItemWithPriorityHelper(
-      // TODO: Binary search breaks when list is empty. added -1 to end that is why.
-      int left,
-      int right,
-      TodoItem item) {
-    // TODO: Check edge cases. Implement dart testing.
-
+  int _binarySearchItemWithPriorityHelper(
+      TodoItem item, List<TodoItem> list, int left, int right) {
     String alphaPrior;
 
     print(
@@ -326,7 +304,7 @@ class _TodoItemsServiceState extends State<TodoItemsService> {
     if (right >= left) {
       int mid = left + (right - left) ~/ 2;
       String alphaMid;
-      switch (_mTodos[mid].priority) {
+      switch (list[mid].priority) {
         case Priorites.B:
           alphaMid = "B";
           break;
@@ -349,105 +327,20 @@ class _TodoItemsServiceState extends State<TodoItemsService> {
         // alphaPrior comes after alphaMid, hence
         // alphaPrior has lower priority than alphaPriorMid.
         // Check right side of mid point.
-        return _binarySearchUnarchivedItemWithPriorityHelper(
-            mid + 1, right, item);
+        return _binarySearchItemWithPriorityHelper(item, list, mid + 1, right);
       } else {
         // alphaPrior comes before alphaPriorMid, hence
         // alphaPrior has higher priority than alphaPriorMid.
         // Check left side of mid point.
         print(
             "_binarySearchUnarchivedItemWithPriorityHelper: item at left side of mid = $mid");
-        return _binarySearchUnarchivedItemWithPriorityHelper(
-            left, mid - 1, item);
+        return _binarySearchItemWithPriorityHelper(item, list, left, mid - 1);
       }
     } else {
       print("_binarySearchUnarchivedItemWithPriorityHelper: retunring -1!");
       print(
           "_binarySearchUnarchivedItemWithPriorityHelper: left = $left; right = $right");
 
-      return -1;
-    }
-  }
-
-  /// Find correct position that [item] should be inserted into [_mArchives] with
-  /// respect to the [Priorities] field.
-  int _binarySearchArchivedItemWithPriority(TodoItem item) {
-    return _binarySearchArchivedItemWithPriorityHelper(
-        0, _mArchives.length - 1, item);
-  }
-
-  /// Helper function: look at [_binarySearchArchivedItemWithPriorities()] for details.
-  ///
-  /// Recursive helper function that is given a [left] parameter
-  /// and [right] parameter so it can recursively find the correct position of
-  /// [item] with respect to the [Priorities] field in the already sorted [_mArchives]
-  /// list.
-  int _binarySearchArchivedItemWithPriorityHelper(
-      // TODO: Binary search breaks when list is empty. added -1 to end that is why.
-      int left,
-      int right,
-      TodoItem item) {
-    // TODO: Check edge cases. Implement dart testing.
-
-    String alphaPrior;
-
-    print(
-        "_binarySearchUnarchivedItemWithPriorityHelper: left = $left; right = $right");
-
-    switch (item.priority) {
-      case Priorites.B:
-        alphaPrior = "B";
-        break;
-      case Priorites.C:
-        alphaPrior = "C";
-        break;
-      case Priorites.D:
-        alphaPrior = "D";
-        break;
-      case Priorites.E:
-        alphaPrior = "E";
-        break;
-      default:
-        alphaPrior = "A";
-    }
-
-    // * Base case check.
-    if (right >= left) {
-      int mid = left + (right - left) ~/ 2;
-      String alphaMid;
-      switch (_mArchives[mid].priority) {
-        case Priorites.B:
-          alphaMid = "B";
-          break;
-        case Priorites.C:
-          alphaMid = "C";
-          break;
-        case Priorites.D:
-          alphaMid = "D";
-          break;
-        case Priorites.E:
-          alphaMid = "E";
-          break;
-        default:
-          alphaMid = "A";
-      }
-
-      if (alphaPrior == alphaMid || (alphaPrior != alphaMid && left == right)) {
-        return mid + 1;
-      }
-      if (alphaPrior.compareTo(alphaMid) > 0) {
-        // alphaPrior comes after alphaMid, hence
-        // alphaPrior has lower priority than alphaPriorMid.
-        // Check right side of mid point.
-        return _binarySearchArchivedItemWithPriorityHelper(
-            mid + 1, right, item);
-      } else {
-        // alphaPrior comes before alphaPriorMid, hence
-        // alphaPrior has higher priority than alphaPriorMid.
-        // Check left side of mid point.
-        return _binarySearchArchivedItemWithPriorityHelper(left, mid - 1, item);
-      }
-    } else {
       return -1;
     }
   }

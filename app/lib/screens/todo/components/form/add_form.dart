@@ -53,7 +53,8 @@ class _AddFormState extends State<AddForm> {
         priority: Priorites.A,
         isArchived: 0);
     // TodoItemsService.of(context).addItem(newItem);
-    TodoItemsService.of(context).insertUnarchivedItemWithPriority(newItem);
+    TodoItemsService.of(context)
+        .insertItemWithPriority(newItem, ItemState.Unarchived);
     this.setState(() {
       _mInputText = "";
     });
