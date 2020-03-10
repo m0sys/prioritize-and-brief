@@ -9,7 +9,7 @@
   </a>
 </p>
 
-> Simple todo list app written in Flutter that enables the user to prioritise and execute their tasks.
+> Simple todo list app written in Flutter that enables the user to prioritize and execute their tasks.
 
 ## Usage
 <h3 align="center">Main Activity</h3>
@@ -46,7 +46,7 @@ Once you have added a new element this is where things get iteresting since you 
              >
  </div>
  <p align="left">
- You can begin to prioritise your tasks, and give yourself a little brief before commencing to complete your task. In order for you to brief you will have to tap on the vertical 3-dotted icon 
+ You can begin to prioritize your tasks, and give yourself a little brief before commencing to complete your task. In order for you to brief you will have to tap on the vertical 3-dotted icon 
     which will open up a popup menu with the option to go to the briefing-screen.
 </p>
 <h3 align="center">And Much More!</h3>
@@ -71,5 +71,16 @@ Give a ⭐️ if this project helped you!
 Copyright © 2020 [mofitdev](https://github.com/mhd53).<br />
 This project is [MIT](https://opensource.org/licenses/MIT) licensed.
 
-***
 
+
+## TODO
+- [ ] add list structure to brief
+- [ ] make more information fit into screen by reducing UI element size
+- [ ] add edit feature to TodoItems
+- [ ] color code abc
+- [ ] Replace BSI algorithm with Max Priority Queue data structure
+
+## BUG FIXES
+- [ ] Fix the loss of open TodoItems state when switching tabs
+- [ ] Fix binary search insert alogorithm to rearrange more fluidly
+***
