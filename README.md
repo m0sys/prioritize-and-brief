@@ -58,7 +58,7 @@ There is alot more to discover about the app, and so I plan to make a gif later 
 
 👤 **mofitdev**
 
-* Website: mhd53.github.io
+* Website: https://mhd53.github.io/
 * Github: [@mhd53](https://github.com/mhd53)
 * LinkedIn: [@mhd53.github.io](https://linkedin.com/in/mhd53.github.io)
 
