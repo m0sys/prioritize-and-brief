@@ -49,9 +49,9 @@ Once you have added a new element this is where things get iteresting since you 
  You can begin to prioritise your tasks, and give yourself a little brief before commencing to complete your task. In order for you to brief you will have to tap on the vertical 3-dotted icon 
     which will open up a popup menu with the option to go to the briefing-screen.
 </p>
-<h3 align="center">And Much More.</h3>
+<h3 align="center">And Much More!</h3>
 <p align="left">
-There is alot more to discover about the app, and so I plan to make a gif later on to show more of the features! <em>If you cannot wait till then <a href="https://github.com/mhd53/prioritize-and-brief/zipball/master">click here</a> to download!</em>
+There is alot more to discover about the app, and so I plan to make a gif later on to show more of the features! <em>If you cannot wait till then <a href="https://github.com/mhd53/prioritize-and-brief/zipball/master">click here</a> to download now!</em>
 </p>
 
 ## Author
